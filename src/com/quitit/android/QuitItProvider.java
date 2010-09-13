@@ -64,7 +64,7 @@ public class QuitItProvider extends AppWidgetProvider {
 		String startPref = sp.getString(PREF_PREFIX_KEY + appWidgetId,  null);
 		Log.d(DEB_TAG, "Value of startPref is " + startPref);
 		
-		return startPref = sp.getString(PREF_PREFIX_KEY, null);
+		return startPref = sp.getString(PREF_PREFIX_KEY + appWidgetId, null);
     }
 	
 	public void updateWidgetView(Context context, AppWidgetManager appWidgetManager,
