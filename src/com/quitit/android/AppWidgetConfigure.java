@@ -8,6 +8,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +25,6 @@ public class AppWidgetConfigure extends Activity {
 	private final String DEB_TAG 				= "AppWidgetConfigure.java";
 	private static final String PREFS_NAME 		= "com.quitit.appwidget.AppWidget";
 	private static final String PREF_PREFIX_KEY = "id_prefix_";
-	final Context context = AppWidgetConfigure.this;
 	
 	GregorianCalendar mDate;
 	StringBuilder mSb;
@@ -67,6 +67,8 @@ public class AppWidgetConfigure extends Activity {
     	 ok.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				final Context context = AppWidgetConfigure.this;
+				
 				int month;
 				int day;
 				int year;
@@ -87,15 +89,17 @@ public class AppWidgetConfigure extends Activity {
 				Log.d(DEB_TAG, "STRINGBUILDER " + mSb);
 				
 				mDate = new GregorianCalendar(dp.getYear(), dp.getMonth(), dp.getDayOfMonth());
-				/*Log.d(DEB_TAG, "year is " + dp.getYear());
-				Log.d(DEB_TAG, "month is " + dp.getMonth());
-				Log.d(DEB_TAG, "day is " + dp.getDayOfMonth());
-				Log.d(DEB_TAG, "date is " + mDate.getTime());*/
 				saveStartPref(AppWidgetConfigure.this, mAppWidgetId, mSb.toString());
 				
 				// Push widget update to surface with newly set days
 		    	AppWidgetManager awm = AppWidgetManager.getInstance(context);
 		    	updateWidgetView(context, awm, mAppWidgetId);
+		    	
+		    	// Make sure we pass back the original appWidgetId
+	            Intent resultValue = new Intent();
+	            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+	            setResult(RESULT_OK, resultValue);
+	            finish();
 			}
     	 });
     	 
@@ -117,6 +121,8 @@ public class AppWidgetConfigure extends Activity {
     // Write the startDate to the SharedPreferences object for this widget
     public void saveStartPref(Context context, int appWidgetId, String mSb2) {
     	Log.d(DEB_TAG, "Inside of saveStartPref");
+    	Log.d(DEB_TAG, "appId is " + appWidgetId);
+    	Log.d(DEB_TAG, "string pref is " + mSb2);
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_PREFIX_KEY + appWidgetId, mSb2);
         prefs.commit();
@@ -126,10 +132,10 @@ public class AppWidgetConfigure extends Activity {
     public String getStoredStartDate(Context context, int appWidgetId){
     	Log.d(DEB_TAG, "Inside getStoredStartDate");
         SharedPreferences sp = context.getSharedPreferences(PREFS_NAME, 0);
-		String startPref = sp.getString(PREF_PREFIX_KEY, null);
+		String startPref = sp.getString(PREF_PREFIX_KEY + appWidgetId,  null);
 		Log.d(DEB_TAG, "Value of startPref is " + startPref);
 		
-		return startPref = sp.getString(PREF_PREFIX_KEY, null);
+		return startPref = sp.getString(PREF_PREFIX_KEY + appWidgetId, null);
     }
     
     public void updateWidgetView(Context context, AppWidgetManager appWidgetManager,
@@ -138,7 +144,7 @@ public class AppWidgetConfigure extends Activity {
     	String dayCount;
         
     	String date = getStoredStartDate(context, appWidgetId);
-    	
+    	Log.d(DEB_TAG, "date is " + date);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
         
         if(date == null){
@@ -147,14 +153,15 @@ public class AppWidgetConfigure extends Activity {
         else{
         
         dayCount = TimeDifference.getDaysDifference(date);
+        Log.d(DEB_TAG, "Value of dayCount is " + dayCount);
         views.setTextViewText(R.id.days, dayCount);
         
-     /*   Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
-        Intent openApp = new Intent(context, DayCount.class);
-        openApp.putExtra("widgetId", appWidgetId);
+        Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
+        //Intent openApp = new Intent(context, DayCount.class);
+        //openApp.putExtra("widgetId", appWidgetId);
         Log.d(DEB_TAG, "$$$$$$$$$id is " + appWidgetId);
-        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, 0, openApp, PendingIntent.FLAG_CANCEL_CURRENT);
-        views.setOnClickPendingIntent(R.id.openFull, pendingAppIntent);*/
+        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, 0, viewIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        views.setOnClickPendingIntent(R.id.openFull, pendingAppIntent);
         
         // Tell the widget manager
         appWidgetManager.updateAppWidget(appWidgetId, views);       	
