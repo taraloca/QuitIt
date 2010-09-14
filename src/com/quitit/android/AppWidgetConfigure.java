@@ -156,11 +156,11 @@ public class AppWidgetConfigure extends Activity {
         Log.d(DEB_TAG, "Value of dayCount is " + dayCount);
         views.setTextViewText(R.id.days, dayCount);
         
-        Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
-        //Intent openApp = new Intent(context, DayCount.class);
-        //openApp.putExtra("widgetId", appWidgetId);
+        //Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
+        Intent openApp = new Intent(context, RunningTally.class);
+        openApp.putExtra("widgetId", appWidgetId);
         Log.d(DEB_TAG, "$$$$$$$$$id is " + appWidgetId);
-        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, 0, viewIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, 0, openApp, PendingIntent.FLAG_CANCEL_CURRENT);
         views.setOnClickPendingIntent(R.id.openFull, pendingAppIntent);
         
         // Tell the widget manager
