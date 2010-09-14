@@ -22,8 +22,8 @@ import android.widget.RemoteViews;
 public class AppWidgetConfigure extends Activity {
 	// Debug tag
 	private final String DEB_TAG 				= "AppWidgetConfigure.java";
-	private static final String PREFS_NAME 		= "com.quitit.appwidget.AppWidget";
-	private static final String PREF_PREFIX_KEY = "id_prefix_";
+//	private static final String PREFS_NAME 		= "com.quitit.appwidget.AppWidget";
+//	private static final String PREF_PREFIX_KEY = "id_prefix_";
 	
 	GregorianCalendar mDate;
 	StringBuilder mSb;
@@ -118,23 +118,23 @@ public class AppWidgetConfigure extends Activity {
     }
     	
     // Write the startDate to the SharedPreferences object for this widget
-    public void saveStartPref(Context context, int appWidgetId, String mSb2) {
+    public void saveStartPref(Context context, int appWidgetId, String startDate) {
     	Log.d(DEB_TAG, "Inside of saveStartPref");
     	Log.d(DEB_TAG, "appId is " + appWidgetId);
-    	Log.d(DEB_TAG, "string pref is " + mSb2);
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.putString(PREF_PREFIX_KEY + appWidgetId, mSb2);
+    	Log.d(DEB_TAG, "string pref is " + startDate);
+        SharedPreferences.Editor prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0).edit();
+        prefs.putString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId, startDate);
         prefs.commit();
     }
     
     //retrieve the startDate
     public String getStoredStartDate(Context context, int appWidgetId){
     	Log.d(DEB_TAG, "Inside getStoredStartDate");
-        SharedPreferences sp = context.getSharedPreferences(PREFS_NAME, 0);
-		String startPref = sp.getString(PREF_PREFIX_KEY + appWidgetId,  null);
+        SharedPreferences sp = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
+		String startPref = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId,  null);
 		Log.d(DEB_TAG, "Value of startPref is " + startPref);
 		
-		return startPref = sp.getString(PREF_PREFIX_KEY + appWidgetId, null);
+		return startPref = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId, null);
     }
     
     public void updateWidgetView(Context context, AppWidgetManager appWidgetManager,

@@ -52,9 +52,14 @@ public class RunningTally extends Activity {
         	id = extras.getInt("widgetId");
         }
         
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String prefix = prefs.getString(PREF_PREFIX_KEY + id, null);
+        SharedPreferences prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
+        String prefix = prefs.getString(QUITIT.Preferences.WIDGET_PREFIX + id, null);
         
+        if(prefix != null){
+        	
+        }else{
+        	
+        }
         bd = new TimeBreakDown();
         bd.calculate(prefix);
         
@@ -72,8 +77,7 @@ public class RunningTally extends Activity {
         tvMilSecs	= (TextView)findViewById(R.id.millisecs);
         btnExtras	= (Button)findViewById(R.id.btnExtra);
         
-        /* this works
-         * tvDays.setText(TimeDifference.getDaysDifference(prefix));
+        /* tvDays.setText(TimeDifference.getDaysDifference(prefix));
         tvHours.setText(TimeDifference.getHoursDifference(prefix));
         tvMins.setText(TimeDifference.getMinutesDifference(prefix));
         tvSecs.setText(TimeDifference.getSecondsDifference(prefix));
