@@ -17,11 +17,13 @@ import android.widget.Toast;
 public class RunningTally extends Activity {
 	// Debug tag
 	private final String DEB_TAG = "RunningTally.java";
-	
-	private TimeZone tz  = TimeZone.getDefault();TextView tvDays;
+	private TimeBreakDown bd;
+	private TimeZone tz  = TimeZone.getDefault();
+	private TextView tvDays;
     private TextView tvMonths;
     private TextView tvYrs;
     private TextView tvHours;
+    private TextView tvMins;
     private TextView tvSecs;
     private TextView tvMilSecs;
     private Button btnExtras;
@@ -42,6 +44,7 @@ public class RunningTally extends Activity {
         Log.d(DEB_TAG, "Inside DAYCOUNT ONCREATE");
         setContentView(R.layout.running_tally);
         
+        
      // Find the widget id from the intent. 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -52,11 +55,10 @@ public class RunningTally extends Activity {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefix = prefs.getString(PREF_PREFIX_KEY + id, null);
         
-        Log.d(DEB_TAG, "########Value of prefix is " + prefix);
-        if (prefix != null) {
-        } else {
-        }
+        bd = new TimeBreakDown();
+        bd.calculate(prefix);
         
+        Log.d(DEB_TAG, "########Value of prefix is " + prefix);
         Log.d(DEB_TAG, "#########appWidgetId" + id);
        
         //td = new TimeDifference();
@@ -65,14 +67,23 @@ public class RunningTally extends Activity {
         tvMonths	= (TextView)findViewById(R.id.months);
         tvYrs		= (TextView)findViewById(R.id.years);
         tvHours		= (TextView)findViewById(R.id.hours);
+        tvMins		= (TextView)findViewById(R.id.minutes);
         tvSecs		= (TextView)findViewById(R.id.seconds);
         tvMilSecs	= (TextView)findViewById(R.id.millisecs);
         btnExtras	= (Button)findViewById(R.id.btnExtra);
         
-        tvDays.setText(TimeDifference.getDaysDifference(prefix));
+        /* this works
+         * tvDays.setText(TimeDifference.getDaysDifference(prefix));
         tvHours.setText(TimeDifference.getHoursDifference(prefix));
+        tvMins.setText(TimeDifference.getMinutesDifference(prefix));
         tvSecs.setText(TimeDifference.getSecondsDifference(prefix));
-        tvMilSecs.setText(TimeDifference.getMilisecondsDifference(prefix));
+        tvMilSecs.setText(TimeDifference.getMilisecondsDifference(prefix));*/
+        
+        tvDays.setText(Double.toString(bd.daysOld));
+        tvHours.setText(Double.toString(bd.hrsOld));
+        tvMins.setText(Double.toString(bd.minsOld));
+        tvSecs.setText(Double.toString(bd.secondsOld));
+        tvMilSecs.setText(Double.toString(bd.breathsOld));
         
         btnExtras.setOnClickListener(storeString);
         

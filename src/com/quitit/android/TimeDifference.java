@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import android.util.Log;
 
@@ -58,8 +59,8 @@ public class TimeDifference {
     }
     private static Long getStartTime (String startDate){
     	Log.d(DEB_TAG, "INSIDE SET CALENDARS");
-    	
     	SimpleDateFormat sdf 	= new SimpleDateFormat("M-d-yyyy");
+    	sdf.setTimeZone(TimeZone.getDefault());
     	Date sd 				= null;   
     	try {
 			sd = sdf.parse(startDate);
