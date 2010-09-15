@@ -41,7 +41,7 @@ public class RunningTally extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int id = 0;
-        Log.d(DEB_TAG, "Inside DAYCOUNT ONCREATE");
+        Log.d(DEB_TAG, "Inside RUNNINGTALLY ONCREATE");
         setContentView(R.layout.running_tally);
         
         
@@ -49,17 +49,19 @@ public class RunningTally extends Activity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
+        	Log.d(DEB_TAG, "INSIDE IF EXTRAS NOT NULL");
         	id = extras.getInt("widgetId");
+        	Log.d(DEB_TAG, "Value of widget id grabbed from intent " + id);
         }
         
         SharedPreferences prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
         String prefix = prefs.getString(QUITIT.Preferences.WIDGET_PREFIX + id, null);
         
-        if(prefix != null){
+        /*if(prefix != null){
         	
         }else{
         	
-        }
+        }*/
         bd = new TimeBreakDown();
         bd.calculate(prefix);
         
@@ -69,8 +71,8 @@ public class RunningTally extends Activity {
         //td = new TimeDifference();
         
         tvDays 		= (TextView)findViewById(R.id.days);
-        tvMonths	= (TextView)findViewById(R.id.months);
-        tvYrs		= (TextView)findViewById(R.id.years);
+        //tvMonths	= (TextView)findViewById(R.id.months);
+        //tvYrs		= (TextView)findViewById(R.id.years);
         tvHours		= (TextView)findViewById(R.id.hours);
         tvMins		= (TextView)findViewById(R.id.minutes);
         tvSecs		= (TextView)findViewById(R.id.seconds);
@@ -86,10 +88,10 @@ public class RunningTally extends Activity {
         tvDays.setText(Double.toString(bd.daysOld));
         tvHours.setText(Double.toString(bd.hrsOld));
         tvMins.setText(Double.toString(bd.minsOld));
-        tvSecs.setText(Double.toString(bd.secondsOld));
-        tvMilSecs.setText(Double.toString(bd.breathsOld));
+        tvSecs.setText(Double.toString(bd.secOld));
+        tvMilSecs.setText(Double.toString(bd.msOld));
         
-        btnExtras.setOnClickListener(storeString);
+        btnExtras.setOnClickListener(refreshScreen);
         
         // Set the default time zone
         TimeZone.setDefault(tz);
@@ -117,12 +119,12 @@ public class RunningTally extends Activity {
         Toast.makeText(this, tz.getDisplayName(), Toast.LENGTH_LONG).show();
 		
 	}
-	private View.OnClickListener storeString = new View.OnClickListener() {
+	private View.OnClickListener refreshScreen = new View.OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Intent myIntent = new Intent(context, GetExtraActivity.class);
+			Intent myIntent = new Intent(context, RunningTally.class);
 	        myIntent.putExtra("foo", "wtf");
 			startActivity(myIntent);
 	        

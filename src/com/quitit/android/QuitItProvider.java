@@ -3,26 +3,58 @@ package com.quitit.android;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 public class QuitItProvider extends AppWidgetProvider {
 	private final String DEB_TAG 				= "QuitItProvider.java";
-//	private static final String PREFS_NAME 		= "com.quitit.appwidget.AppWidget";
-//	private static final String PREF_PREFIX_KEY = "id_prefix_";
+	
+	@Override
+	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
+		super.onUpdate(context, appWidgetManager, appWidgetIds);
+		final int N = appWidgetIds.length;
+        for (int i=0; i<N; i++) {
+            int appWidgetId = appWidgetIds[i];
+            updateWidgetView(context, appWidgetManager, appWidgetId);
+        }
+	}
 	
 	@Override
     public void onDeleted(Context context, int[] appWidgetIds){
-    	super.onDeleted(context, appWidgetIds);
+		Log.d(DEB_TAG, "onDeleted");
+		//String locCode;
+        SharedPreferences sp = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
+		Editor editor = sp.edit();
+		
+		
+		// remove preference
+		for(int appWidgetId : appWidgetIds){
+			//locCode = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId, null);
+			Log.d(DEB_TAG, "Value of id being removed is " + appWidgetId);
+			editor.remove(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId);
+		}
+		editor.commit();
+		
+		super.onDeleted(context, appWidgetIds);
     }
 	
 	@Override
 	public void onDisabled(Context context){
-		super.onDisabled(context);
+		// When the first widget is created, stop listening for the TIMEZONE_CHANGED and
+        // TIME_CHANGED broadcasts.
+        Log.d(DEB_TAG, "onDisabled");
+        PackageManager pm = context.getPackageManager();
+        pm.setComponentEnabledSetting(
+                new ComponentName("com.quitit.android", ".appwidget.BroadcastReceiver"),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
 	}
 	
 	@Override
@@ -45,16 +77,6 @@ public class QuitItProvider extends AppWidgetProvider {
 		}else{
 			super.onReceive(context, intent);
 		}
-	}
-	
-	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
-		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		final int N = appWidgetIds.length;
-        for (int i=0; i<N; i++) {
-            int appWidgetId = appWidgetIds[i];
-            updateWidgetView(context, appWidgetManager, appWidgetId);
-        }
 	}
 	
 	//retrieve the startDate

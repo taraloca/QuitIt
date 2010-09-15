@@ -32,13 +32,13 @@
 			android:padding="3dip" />
 	</TableRow>
 	<TableRow>
-		<TextView android:text="Milliseconds:"
+		<TextView android:text="Milliseconds: "
 			android:padding="3dip" />
 		<TextView android:id="@+id/millisecs" 
 			android:gravity="right"
 			android:padding="3dip" />
 	</TableRow>
-	<TableRow>
+	<!--<TableRow>
 		<TextView android:text="So let's break it down!  You have:"
 			android:padding="3dip" />
 			<TextView>
@@ -67,9 +67,9 @@
 			android:padding="3dip" />
 	</TableRow>
 	
-		<Button android:id="@+id/btnExtra"
+		--><Button android:id="@+id/btnExtra"
    		android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:text="Return"
+    	android:text="Refresh"
     	/>
 </TableLayout>

@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import android.util.Log;
+
 public class TimeBreakDown {
 	
 	double timeOld;
@@ -15,31 +17,33 @@ public class TimeBreakDown {
 	double daysOld;
 	double hrsOld_e;
 	double hrsOld;
+	double minsOld_e;
 	double minsOld;
+	double secOld_e;
+	double secOld;
+	double msOld_e;
+	double msOld;
 	double breathTimeOld;
 	double breathsOld;
 	Date today;
 	Date cleanDay;
 	
 	public void calculate(String startDate){
-		today = new Date();  
-	    cleanDay = getStartTime(startDate);         
-	    timeOld = (today.getTime() - cleanDay.getTime());         
-	    secTimeOld = timeOld / 1000;         
-	    secondsOld = Math.floor(secTimeOld);         
-	    msPerDay = 24 * 60 * 60 * 1000 ;         
-	    daysOld_e = timeOld / msPerDay;         
-	    daysOld = Math.floor(daysOld_e);         
-	    hrsOld_e = (daysOld_e - daysOld)*24;
-
-	    System.out.println("Hours_e " + hrsOld_e);
-	    hrsOld = Math.floor(hrsOld_e);         
-	    minsOld = Math.floor((hrsOld_e - hrsOld)*60);
-		breathTimeOld = timeOld / 4000;
-		breathsOld = Math.floor(breathTimeOld);
-	       
-	
-	    //timerID = setTimeout("sobertimer()",1000);
+		today 		= new Date();  
+	    cleanDay 	= getStartTime(startDate);         
+	    timeOld 	= (today.getTime() - cleanDay.getTime());  
+	    msPerDay 	= 24 * 60 * 60 * 1000 ;
+	    
+	    daysOld_e 	= timeOld / msPerDay;         
+	    daysOld 	= Math.floor(daysOld_e);         
+	    hrsOld_e 	= (daysOld_e - daysOld)*24;
+	    hrsOld 		= Math.floor(hrsOld_e); 
+	    minsOld_e	= (hrsOld_e - hrsOld)*60;
+	    minsOld 	= Math.floor(minsOld_e);
+	    secOld_e 	= (minsOld_e - minsOld)*60;
+	    secOld		= Math.floor(secOld_e);
+	    msOld_e		= (secOld_e - secOld)*1000;
+	    msOld		= Math.floor(msOld_e);
 	}
 	
 	private Date getStartTime (String startDate){
