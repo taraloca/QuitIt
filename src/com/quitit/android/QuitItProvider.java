@@ -120,6 +120,7 @@ public class QuitItProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.days, dayCount);
         
         //Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
+       
         
         Intent openApp = new Intent(context, RunningTally.class);
         openApp.putExtra("widgetId", appWidgetId);

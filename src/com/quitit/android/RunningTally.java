@@ -160,7 +160,7 @@ public class RunningTally extends Activity {
         tvHours.setText(Double.toString(bd.hrsOld));
         tvMins.setText(Double.toString(bd.minsOld));
         tvSecs.setText(Double.toString(bd.secOld));
-        tvMilSecs.setText(Double.toString(bd.msOld));
+       // tvMilSecs.setText(Double.toString(bd.msOld));
     }
 
 	/* ------------------ LocationListener Interface functions ---------------------- */
