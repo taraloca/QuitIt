@@ -11,6 +11,7 @@ package com.quitit.android;
 public class QUITIT {
 
 	private final String DEB_TAG 				= "AppWidgetConfigure.java";
+	public static final String PKG_QUITIT		= "quitit.com";
 	
 	public static class Intents {
 		public static final String ACTION_ABOUT 			= "quitit.intent.action.ABOUT";

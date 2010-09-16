@@ -14,7 +14,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 public class QuitItProvider extends AppWidgetProvider {
-	private final String DEB_TAG 				= "QuitItProvider.java";
+	private static final String DEB_TAG 				= "QuitItProvider.java";
 	
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
@@ -33,7 +33,6 @@ public class QuitItProvider extends AppWidgetProvider {
         SharedPreferences sp = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
 		Editor editor = sp.edit();
 		
-		
 		// remove preference
 		for(int appWidgetId : appWidgetIds){
 			//locCode = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId, null);
@@ -47,14 +46,14 @@ public class QuitItProvider extends AppWidgetProvider {
 	
 	@Override
 	public void onDisabled(Context context){
-		// When the first widget is created, stop listening for the TIMEZONE_CHANGED and
-        // TIME_CHANGED broadcasts.
+		
         Log.d(DEB_TAG, "onDisabled");
         PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(
-                new ComponentName("com.quitit.android", ".appwidget.BroadcastReceiver"),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
+            new ComponentName(QUITIT.PKG_QUITIT, ".appwidget.ExampleBroadcastReceiver"),
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP);
+        super.onDisabled(context);
 	}
 	
 	@Override
@@ -79,8 +78,18 @@ public class QuitItProvider extends AppWidgetProvider {
 		}
 	}
 	
-	//retrieve the startDate
-    public String getStoredStartDate(Context context, int appWidgetId){
+	// Write the startDate to the SharedPreferences object for this widget
+    public static void saveStartPref(Context context, int appWidgetId, String startDate) {
+    	Log.d(DEB_TAG, "Inside of saveStartPref");
+    	Log.d(DEB_TAG, "appId is " + appWidgetId);
+    	Log.d(DEB_TAG, "string pref is " + startDate);
+        SharedPreferences.Editor prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0).edit();
+        prefs.putString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId, startDate);
+        prefs.commit();
+    }
+    
+    //retrieve the startDate
+    public static String getStoredStartDate(Context context, int appWidgetId){
     	Log.d(DEB_TAG, "Inside getStoredStartDate");
         SharedPreferences sp = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
 		String startPref = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId,  null);
@@ -88,14 +97,17 @@ public class QuitItProvider extends AppWidgetProvider {
 		
 		return startPref = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId, null);
     }
-	
-	public void updateWidgetView(Context context, AppWidgetManager appWidgetManager,
+    
+    /*
+     * Updates the view of the widget
+     */
+    public static void updateWidgetView(Context context, AppWidgetManager appWidgetManager,
             int appWidgetId) {
     	Log.d(DEB_TAG, "Inside updateAppWidget");
     	String dayCount;
         
     	String date = getStoredStartDate(context, appWidgetId);
-    	
+    	Log.d(DEB_TAG, "Inside updateWidgetView via onUpdate and date is " + date);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
         
         if(date == null){
@@ -108,15 +120,16 @@ public class QuitItProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.days, dayCount);
         
         //Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
+        
         Intent openApp = new Intent(context, RunningTally.class);
         openApp.putExtra("widgetId", appWidgetId);
         Log.d(DEB_TAG, "$$$$$$$$$id is " + appWidgetId);
-        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, 0, openApp, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, appWidgetId, openApp, PendingIntent.FLAG_CANCEL_CURRENT  );
         views.setOnClickPendingIntent(R.id.openFull, pendingAppIntent);
         
         // Tell the widget manager
         appWidgetManager.updateAppWidget(appWidgetId, views);       	
         	
         }
-	}
+    }
 }

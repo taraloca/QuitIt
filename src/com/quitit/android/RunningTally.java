@@ -1,6 +1,8 @@
 package com.quitit.android;
 
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +30,8 @@ public class RunningTally extends Activity {
     private TextView tvMilSecs;
     private Button btnExtras;
     
+    private Timer autoUpdate;
+    
    // private TimeDifference td;
     
     final Context context = RunningTally.this;
@@ -40,12 +44,12 @@ public class RunningTally extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int id = 0;
+        updateTally();
+        /*int id = 0;
         Log.d(DEB_TAG, "Inside RUNNINGTALLY ONCREATE");
         setContentView(R.layout.running_tally);
         
-        
-     // Find the widget id from the intent. 
+        // Find the widget id from the intent. 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -56,20 +60,13 @@ public class RunningTally extends Activity {
         
         SharedPreferences prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
         String prefix = prefs.getString(QUITIT.Preferences.WIDGET_PREFIX + id, null);
-        
-        /*if(prefix != null){
-        	
-        }else{
-        	
-        }*/
+
         bd = new TimeBreakDown();
         bd.calculate(prefix);
         
         Log.d(DEB_TAG, "########Value of prefix is " + prefix);
         Log.d(DEB_TAG, "#########appWidgetId" + id);
-       
-        //td = new TimeDifference();
-        
+
         tvDays 		= (TextView)findViewById(R.id.days);
         //tvMonths	= (TextView)findViewById(R.id.months);
         //tvYrs		= (TextView)findViewById(R.id.years);
@@ -78,6 +75,80 @@ public class RunningTally extends Activity {
         tvSecs		= (TextView)findViewById(R.id.seconds);
         tvMilSecs	= (TextView)findViewById(R.id.millisecs);
         btnExtras	= (Button)findViewById(R.id.btnExtra);
+        
+         tvDays.setText(TimeDifference.getDaysDifference(prefix));
+        tvHours.setText(TimeDifference.getHoursDifference(prefix));
+        tvMins.setText(TimeDifference.getMinutesDifference(prefix));
+        tvSecs.setText(TimeDifference.getSecondsDifference(prefix));
+        tvMilSecs.setText(TimeDifference.getMilisecondsDifference(prefix));
+        
+        tvDays.setText(Double.toString(bd.daysOld));
+        tvHours.setText(Double.toString(bd.hrsOld));
+        tvMins.setText(Double.toString(bd.minsOld));
+        tvSecs.setText(Double.toString(bd.secOld));
+        tvMilSecs.setText(Double.toString(bd.msOld));
+        
+        btnExtras.setOnClickListener(refreshScreen);*/
+        
+        // Set the default time zone
+        TimeZone.setDefault(tz);
+        Toast.makeText(this, tz.getDisplayName(), Toast.LENGTH_LONG).show();
+
+    }
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	autoUpdate = new Timer();
+    	autoUpdate.schedule(new TimerTask() {
+	      @Override
+	      public void run() {
+	    	  	runOnUiThread(new Runnable() {
+	    	  		public void run() {
+	    	  			updateTally();
+	    	  		}
+	    });
+      }
+     }, 0, 1000); // updates each second
+    }
+    
+    @Override
+    public void onPause() {
+    	autoUpdate.cancel();
+    	super.onPause();
+    }
+
+
+    private void updateTally(){
+    	int id = 0;
+        Log.d(DEB_TAG, "Inside RUNNINGTALLY ONCREATE");
+        setContentView(R.layout.running_tally);
+        
+        // Find the widget id from the intent. 
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+        	Log.d(DEB_TAG, "INSIDE IF EXTRAS NOT NULL");
+        	id = extras.getInt("widgetId");
+        	Log.d(DEB_TAG, "Value of widget id grabbed from intent " + id);
+        }
+        
+        SharedPreferences prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
+        String prefix = prefs.getString(QUITIT.Preferences.WIDGET_PREFIX + id, null);
+
+        bd = new TimeBreakDown();
+        bd.calculate(prefix);
+        
+        Log.d(DEB_TAG, "########Value of prefix is " + prefix);
+        Log.d(DEB_TAG, "#########appWidgetId" + id);
+
+        tvDays 		= (TextView)findViewById(R.id.days);
+        //tvMonths	= (TextView)findViewById(R.id.months);
+        //tvYrs		= (TextView)findViewById(R.id.years);
+        tvHours		= (TextView)findViewById(R.id.hours);
+        tvMins		= (TextView)findViewById(R.id.minutes);
+        tvSecs		= (TextView)findViewById(R.id.seconds);
+        //tvMilSecs	= (TextView)findViewById(R.id.millisecs);
+        //btnExtras	= (Button)findViewById(R.id.btnExtra);
         
         /* tvDays.setText(TimeDifference.getDaysDifference(prefix));
         tvHours.setText(TimeDifference.getHoursDifference(prefix));
@@ -90,22 +161,8 @@ public class RunningTally extends Activity {
         tvMins.setText(Double.toString(bd.minsOld));
         tvSecs.setText(Double.toString(bd.secOld));
         tvMilSecs.setText(Double.toString(bd.msOld));
-        
-        btnExtras.setOnClickListener(refreshScreen);
-        
-        // Set the default time zone
-        TimeZone.setDefault(tz);
-        Toast.makeText(this, tz.getDisplayName(), Toast.LENGTH_LONG).show();
-
     }
 
-    //  Set onClickListener to then call the calculate method
-    private View.OnClickListener onCalculate = new View.OnClickListener() {
-    	@Override
-		public void onClick(View v) {
-		}
-	};
- 
 	/* ------------------ LocationListener Interface functions ---------------------- */
 	public void onLocationChanged(Location location) {
 		

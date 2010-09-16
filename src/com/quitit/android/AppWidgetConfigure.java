@@ -88,11 +88,11 @@ public class AppWidgetConfigure extends Activity {
 				Log.d(DEB_TAG, "STRINGBUILDER " + mSb);
 				
 				mDate = new GregorianCalendar(dp.getYear(), dp.getMonth(), dp.getDayOfMonth());
-				saveStartPref(AppWidgetConfigure.this, mAppWidgetId, mSb.toString());
+				QuitItProvider.saveStartPref(AppWidgetConfigure.this, mAppWidgetId, mSb.toString());
 				
 				// Push widget update to surface with newly set days
 		    	AppWidgetManager awm = AppWidgetManager.getInstance(context);
-		    	updateWidgetView(context, awm, mAppWidgetId);
+		    	QuitItProvider.updateWidgetView(context, awm, mAppWidgetId);
 		    	
 		    	// Make sure we pass back the original appWidgetId
 	            Intent resultValue = new Intent();
@@ -101,7 +101,6 @@ public class AppWidgetConfigure extends Activity {
 	            finish();
 			}
     	 });
-    	 
     	 
     	 /*
     	  * Action with cancel button
@@ -115,57 +114,5 @@ public class AppWidgetConfigure extends Activity {
 				finish();
 			}
 		});
-    }
-    	
-    // Write the startDate to the SharedPreferences object for this widget
-    public void saveStartPref(Context context, int appWidgetId, String startDate) {
-    	Log.d(DEB_TAG, "Inside of saveStartPref");
-    	Log.d(DEB_TAG, "appId is " + appWidgetId);
-    	Log.d(DEB_TAG, "string pref is " + startDate);
-        SharedPreferences.Editor prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0).edit();
-        prefs.putString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId, startDate);
-        prefs.commit();
-    }
-    
-    //retrieve the startDate
-    public String getStoredStartDate(Context context, int appWidgetId){
-    	Log.d(DEB_TAG, "Inside getStoredStartDate");
-        SharedPreferences sp = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
-		String startPref = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId,  null);
-		Log.d(DEB_TAG, "Value of startPref is " + startPref);
-		
-		return startPref = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId, null);
-    }
-    
-    public void updateWidgetView(Context context, AppWidgetManager appWidgetManager,
-            int appWidgetId) {
-    	Log.d(DEB_TAG, "Inside updateAppWidget");
-    	String dayCount;
-        
-    	String date = getStoredStartDate(context, appWidgetId);
-    	Log.d(DEB_TAG, "date is " + date);
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-        
-        if(date == null){
-        	views.setTextViewText(R.id.days, "wtf");
-        }
-        else{
-        
-        dayCount = TimeDifference.getDaysDifference(date);
-        Log.d(DEB_TAG, "Value of dayCount is " + dayCount);
-        views.setTextViewText(R.id.days, dayCount);
-        
-        //Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
-        Intent openApp = new Intent(context, RunningTally.class);
-        openApp.putExtra("widgetId", appWidgetId);
-        Log.d(DEB_TAG, "$$$$$$$$$id is " + appWidgetId);
-        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, 0, openApp, PendingIntent.FLAG_CANCEL_CURRENT);
-        views.setOnClickPendingIntent(R.id.openFull, pendingAppIntent);
-        
-        // Tell the widget manager
-        appWidgetManager.updateAppWidget(appWidgetId, views);       	
-        	
-        }
-
     }
 }
