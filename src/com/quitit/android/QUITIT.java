@@ -13,7 +13,7 @@ public class QUITIT {
 	private final String DEB_TAG 				= "AppWidgetConfigure.java";
 	
 	public static class Intents {
-		public static final String ACTION_ABOUT 			= "quitit.intent.action.ABOUT";
+		//public static final String ACTION_ABOUT 			= "quitit.intent.action.ABOUT";
 		public static final String CATEGORY_ABOUT 			= "quitit.intent.category.ABOUT";
 		public static final String ACTION_START_FROM_WIDGET = "quitit.intent.action.START_FROM_WIDGET";
 	}
