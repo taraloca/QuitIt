@@ -19,9 +19,12 @@ public class QuitItProvider extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
+		Log.d(DEB_TAG, "Inside onUpdate provider");
+		
 		final int N = appWidgetIds.length;
         for (int i=0; i<N; i++) {
             int appWidgetId = appWidgetIds[i];
+            Log.d(DEB_TAG, "appWidgetId " + appWidgetId);
             updateWidgetView(context, appWidgetManager, appWidgetId);
         }
 	}
@@ -63,7 +66,7 @@ public class QuitItProvider extends AppWidgetProvider {
 	
 	@Override
 	public void onReceive(Context context, Intent intent){
-		
+		Log.d(DEB_TAG, "Inside onReceive provider");
 		// fix for onDelete not working in Android 1.5
 		final String action = intent.getAction();
 		
@@ -80,7 +83,7 @@ public class QuitItProvider extends AppWidgetProvider {
 	
 	// Write the startDate to the SharedPreferences object for this widget
     public static void saveStartPref(Context context, int appWidgetId, String startDate) {
-    	Log.d(DEB_TAG, "Inside of saveStartPref");
+    	Log.d(DEB_TAG, "Inside of saveStartPref provider");
     	Log.d(DEB_TAG, "appId is " + appWidgetId);
     	Log.d(DEB_TAG, "string pref is " + startDate);
         SharedPreferences.Editor prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0).edit();
@@ -90,7 +93,7 @@ public class QuitItProvider extends AppWidgetProvider {
     
     //retrieve the startDate
     public static String getStoredStartDate(Context context, int appWidgetId){
-    	Log.d(DEB_TAG, "Inside getStoredStartDate");
+    	Log.d(DEB_TAG, "Inside getStoredStartDate provider");
         SharedPreferences sp = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
 		String startPref = sp.getString(QUITIT.Preferences.WIDGET_PREFIX + appWidgetId,  null);
 		Log.d(DEB_TAG, "Value of startPref is " + startPref);

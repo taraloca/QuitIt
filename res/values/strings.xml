@@ -2,4 +2,19 @@
 <resources>
     <string name="hello">Hello World, QuitIt!</string>
     <string name="app_name">QuitIt</string>
+    <!-- A -->
+	<string name="about">About</string>
+	<string name="about_information">The Quit It application is intended to keep track of how many days you have been nicotine, alcohol, or drug free.  I, the developer, plan on adding more functionality to this application and would welcome any comments/suggestions.</string>
+	
+	<!-- C -->
+	<string name="contact">Contact Information</string>
+    <string name="contact_info">Use the Menu button to send an email.</string>
+    
+	<!-- D -->
+	<string name="developer_tag">Developer</string>
+	<string name="developer_name">Tara Verity</string>
+	
+	<!-- E -->
+    <string name="email_us">Email Us</string>
+	
 </resources>

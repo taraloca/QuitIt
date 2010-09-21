@@ -42,11 +42,19 @@ public class AppWidgetConfigure extends Activity {
     	// get the appWidgetId of the appWidget being configured
     	Intent launchIntent = getIntent();
     	Bundle extras 		= launchIntent.getExtras();
-    	mAppWidgetId 		= extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
-    			                                AppWidgetManager.INVALID_APPWIDGET_ID);
-    	
-    	Log.d(DEB_TAG, "Value of id is " + mAppWidgetId);
-    	
+    	Log.d(DEB_TAG, "get extras oncreate " + extras);
+    	mAppWidgetId = extras.getInt("widgetId");
+    	Log.d(DEB_TAG, "Inside onCreate mAppWidgetId is " + mAppWidgetId);
+    	if(extras != null){
+	    	if(extras.getInt("widgetId") != 0){
+	    		mAppWidgetId = extras.getInt("widgetId");
+	        	Log.d(DEB_TAG, "Inside onCreate mAppWidgetId is " + mAppWidgetId);
+	    	}else{
+	    		mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+	                    AppWidgetManager.INVALID_APPWIDGET_ID);
+	    		Log.d(DEB_TAG, "Inside onCreate mAppWidgetId is " + mAppWidgetId);
+	    	}
+    	}
     	/*
     	 * Set the result to CANCELED.  This will cause the widget host to cancel
     	 * out of the widget placement if they press the back button.

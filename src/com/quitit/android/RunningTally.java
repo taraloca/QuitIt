@@ -11,7 +11,9 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ public class RunningTally extends Activity {
 	private final String DEB_TAG = "RunningTally.java";
 	private TimeBreakDown bd;
 	private TimeZone tz  = TimeZone.getDefault();
+	private TextView tvStartDate;
 	private TextView tvDays;
     private TextView tvMonths;
     private TextView tvYrs;
@@ -29,6 +32,7 @@ public class RunningTally extends Activity {
     private TextView tvSecs;
     private TextView tvMilSecs;
     private Button btnExtras;
+    private int mAppId = 0;
     
     private Timer autoUpdate;
     
@@ -45,50 +49,7 @@ public class RunningTally extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         updateTally();
-        /*int id = 0;
-        Log.d(DEB_TAG, "Inside RUNNINGTALLY ONCREATE");
-        setContentView(R.layout.running_tally);
         
-        // Find the widget id from the intent. 
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-        	Log.d(DEB_TAG, "INSIDE IF EXTRAS NOT NULL");
-        	id = extras.getInt("widgetId");
-        	Log.d(DEB_TAG, "Value of widget id grabbed from intent " + id);
-        }
-        
-        SharedPreferences prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
-        String prefix = prefs.getString(QUITIT.Preferences.WIDGET_PREFIX + id, null);
-
-        bd = new TimeBreakDown();
-        bd.calculate(prefix);
-        
-        Log.d(DEB_TAG, "########Value of prefix is " + prefix);
-        Log.d(DEB_TAG, "#########appWidgetId" + id);
-
-        tvDays 		= (TextView)findViewById(R.id.days);
-        //tvMonths	= (TextView)findViewById(R.id.months);
-        //tvYrs		= (TextView)findViewById(R.id.years);
-        tvHours		= (TextView)findViewById(R.id.hours);
-        tvMins		= (TextView)findViewById(R.id.minutes);
-        tvSecs		= (TextView)findViewById(R.id.seconds);
-        tvMilSecs	= (TextView)findViewById(R.id.millisecs);
-        btnExtras	= (Button)findViewById(R.id.btnExtra);
-        
-         tvDays.setText(TimeDifference.getDaysDifference(prefix));
-        tvHours.setText(TimeDifference.getHoursDifference(prefix));
-        tvMins.setText(TimeDifference.getMinutesDifference(prefix));
-        tvSecs.setText(TimeDifference.getSecondsDifference(prefix));
-        tvMilSecs.setText(TimeDifference.getMilisecondsDifference(prefix));
-        
-        tvDays.setText(Double.toString(bd.daysOld));
-        tvHours.setText(Double.toString(bd.hrsOld));
-        tvMins.setText(Double.toString(bd.minsOld));
-        tvSecs.setText(Double.toString(bd.secOld));
-        tvMilSecs.setText(Double.toString(bd.msOld));
-        
-        btnExtras.setOnClickListener(refreshScreen);*/
         
         // Set the default time zone
         TimeZone.setDefault(tz);
@@ -119,28 +80,29 @@ public class RunningTally extends Activity {
 
 
     private void updateTally(){
-    	int id = 0;
-        Log.d(DEB_TAG, "Inside RUNNINGTALLY ONCREATE");
+    	
+        Log.d(DEB_TAG, "Inside RUNNINGTALLY UPDATETALLY");
         setContentView(R.layout.running_tally);
         
         // Find the widget id from the intent. 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-        	Log.d(DEB_TAG, "INSIDE IF EXTRAS NOT NULL");
-        	id = extras.getInt("widgetId");
-        	Log.d(DEB_TAG, "Value of widget id grabbed from intent " + id);
+        	Log.d(DEB_TAG, "INSIDE IF EXTRAS NOT NULL updateTally");
+        	mAppId = extras.getInt("widgetId");
+        	Log.d(DEB_TAG, "Value of widget id grabbed from intent " + mAppId);
         }
         
         SharedPreferences prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
-        String prefix = prefs.getString(QUITIT.Preferences.WIDGET_PREFIX + id, null);
+        String prefix = prefs.getString(QUITIT.Preferences.WIDGET_PREFIX + mAppId, null);
 
         bd = new TimeBreakDown();
         bd.calculate(prefix);
         
         Log.d(DEB_TAG, "########Value of prefix is " + prefix);
-        Log.d(DEB_TAG, "#########appWidgetId" + id);
+        Log.d(DEB_TAG, "#########appWidgetId" + mAppId);
 
+        tvStartDate	= (TextView)findViewById(R.id.cleanDate);
         tvDays 		= (TextView)findViewById(R.id.days);
         //tvMonths	= (TextView)findViewById(R.id.months);
         //tvYrs		= (TextView)findViewById(R.id.years);
@@ -156,6 +118,7 @@ public class RunningTally extends Activity {
         tvSecs.setText(TimeDifference.getSecondsDifference(prefix));
         tvMilSecs.setText(TimeDifference.getMilisecondsDifference(prefix));*/
         
+        tvStartDate.setText(prefix);
         tvDays.setText(Double.toString(bd.daysOld));
         tvHours.setText(Double.toString(bd.hrsOld));
         tvMins.setText(Double.toString(bd.minsOld));
@@ -176,16 +139,39 @@ public class RunningTally extends Activity {
         Toast.makeText(this, tz.getDisplayName(), Toast.LENGTH_LONG).show();
 		
 	}
-	private View.OnClickListener refreshScreen = new View.OnClickListener() {
+	
+	/** ---------------------- options menu ------------------------- */
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.menu, menu);
+	    return true;
+	}
+	
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()){
+
+    	// About
+		case R.id.about:
+			startActivity(new Intent(this, AboutActivity.class));
+			break;
 		
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Intent myIntent = new Intent(context, RunningTally.class);
-	        myIntent.putExtra("foo", "wtf");
-			startActivity(myIntent);
-	        
+		// Preferences
+		case R.id.edit:
+			Log.d("###########", "inside edit pref choice");
+			 // Find the widget id from the intent. 
+	        Intent configIntent = new Intent(this, AppWidgetConfigure.class);
+	        configIntent.putExtra("widgetId", mAppId);
+	        //SharedPreferences prefs = context.getSharedPreferences(QUITIT.Preferences.PREF_NAME, 0);
+	        //String prefix = prefs.getString(QUITIT.Preferences.WIDGET_PREFIX + id, null);
+	        Log.d(DEB_TAG, "id in edit " + mAppId);
+			startActivity(configIntent);
+			updateTally();
+			break;
 		}
-	};
+		return(super.onOptionsItemSelected(item));
+	}
 	
 }

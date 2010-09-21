@@ -4,7 +4,18 @@
 	android:layout_height="fill_parent"
 	android:stretchColumns="1">
 	<TableRow>
-		<TextView android:text="You have this many days:"
+		<TextView android:text="Your clean date is:"
+			android:padding="3dip" />
+		<TextView android:id="@+id/cleanDate" 
+			android:gravity="right"
+			android:padding="3dip" />
+	</TableRow>
+	<TableRow>
+		<TextView android:text="So let's break it down!  You have:"
+			android:padding="3dip" />
+	</TableRow>
+	<TableRow>
+		<TextView android:text="Days:"
 			android:padding="3dip" />
 		<TextView android:id="@+id/days" 
 			android:gravity="right"
