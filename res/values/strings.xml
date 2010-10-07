@@ -17,4 +17,32 @@
 	<!-- E -->
     <string name="email_us">Email Us</string>
 	
+	<!-- S -->
+	<string name="status_bar_notifications_default">This is a status bar notification</string>
+	<string name="status_bar_notifications_happy_message">I am happy</string>
+    <string name="status_bar_notifications_ok_message">I am ok</string>
+    <string name="status_bar_notifications_sad_message">I am sad</string>
+    <string name="status_bar_notifications_clear">Clear notification</string>
+    <string name="status_bar_notifications_mood_title">Mood ring</string>
+    <string name="status_bar_notifications_default_sound">Sound</string>
+    <string name="status_bar_notifications_default_vibrate">Vibrate</string>
+    <string name="status_bar_notifications_default_all">All</string>
+    
+     <string name="short_notification">Short notification.</string>
+    <string name="long_notification">Long notification.</string>
+    <string name="short_top_notification">Short top.</string>
+    <string name="short_bottom_notification">Short bottom.</string>
+    <string name="short_center_notification">Short center.</string>
+    <string name="short_left_notification">Short left.</string>
+    <string name="short_right_notification">Short right.</string>
+    <string name="custom_notification">Custom Notification:</string>
+    <string name="custom_notification_button">With a Button</string>
+
+    <string name="status_bar_notifications_icons_only">Icons only</string>
+    <string name="status_bar_notifications_icons_and_marquee">Icons and marquee</string>
+    <string name="status_bar_notifications_remote_views">Use remote views in balloon</string>
+    <string name="status_bar_notifications_defaults">Use default values where applicable</string>
+    <string name="status_bar_notifications_happy">:-)</string>
+    <string name="status_bar_notifications_ok">:-|</string>
+    <string name="status_bar_notifications_sad">:-(</string>
 </resources>

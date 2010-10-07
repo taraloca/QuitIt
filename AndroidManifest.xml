@@ -25,8 +25,8 @@
                	android:resource="@xml/quitit_provider" 
                	/>
 		</receiver>
-
+<service android:name=".NotifyingService" />
     </application>
-
+<uses-sdk android:minSdkVersion="7" />
 
 </manifest> 

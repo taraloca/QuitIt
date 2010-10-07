@@ -38,7 +38,8 @@ public class AppWidgetConfigure extends Activity {
     public void onCreate(Bundle savedInstanceState){
     	super.onCreate(savedInstanceState);
     	Log.d(DEB_TAG, "inside onCreate");
-    	
+    	startService(new Intent(AppWidgetConfigure.this,
+                NotifyingService.class));
     	// get the appWidgetId of the appWidget being configured
     	Intent launchIntent = getIntent();
     	Bundle extras 		= launchIntent.getExtras();

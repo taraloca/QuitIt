@@ -76,11 +76,16 @@
 		<TextView android:id="@+id/years" 
 			android:gravity="right"
 			android:padding="3dip" />
-	</TableRow>
+	</TableRow>-->
 	
-		<Button android:id="@+id/btnExtra"
+		<Button android:id="@+id/btnStartListener"
    		android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:text="Refresh"
-    	/>-->
+    	android:text="Start"
+    	/>
+    	<Button android:id="@+id/btnStopListener"
+   		android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:text="Stop"
+    	/>
 </TableLayout>

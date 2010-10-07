@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,8 @@ public class RunningTally extends Activity {
     private TextView tvMins;
     private TextView tvSecs;
     private TextView tvMilSecs;
-    private Button btnExtras;
+    private Button btnStartListner;
+    private Button btnStopListener;
     private int mAppId = 0;
     
     private Timer autoUpdate;
@@ -48,7 +51,14 @@ public class RunningTally extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        updateTally();
+        setContentView(R.layout.running_tally);
+        /*startService(new Intent(RunningTally.this,
+                NotifyingService.class));
+        Button button = (Button) findViewById(R.id.btnStartListener);
+        button.setOnClickListener(mStartListener);
+        button = (Button) findViewById(R.id.btnStopListener);
+        button.setOnClickListener(mStopListener);
+        updateTally();*/
         
         
         // Set the default time zone
@@ -82,7 +92,7 @@ public class RunningTally extends Activity {
     private void updateTally(){
     	
         Log.d(DEB_TAG, "Inside RUNNINGTALLY UPDATETALLY");
-        setContentView(R.layout.running_tally);
+        
         
         // Find the widget id from the intent. 
         Intent intent = getIntent();
@@ -125,6 +135,29 @@ public class RunningTally extends Activity {
         tvSecs.setText(Double.toString(bd.secOld));
        // tvMilSecs.setText(Double.toString(bd.msOld));
     }
+    /*private OnClickListener mStartListener = new OnClickListener() {
+        public void onClick(View v)
+        {
+            // Make sure the service is started.  It will continue running
+            // until someone calls stopService().  The Intent we use to find
+            // the service explicitly specifies our service component, because
+            // we want it running in our own process and don't want other
+            // applications to replace it.
+            startService(new Intent(RunningTally.this,
+                    NotifyingService.class));
+        }
+    };
+
+    private OnClickListener mStopListener = new OnClickListener() {
+        public void onClick(View v)
+        {
+            // Cancel a previous call to startService().  Note that the
+            // service will not actually stop at this point if there are
+            // still bound clients.
+            stopService(new Intent(RunningTally.this,
+                    NotifyingService.class));
+        }
+    };*/
 
 	/* ------------------ LocationListener Interface functions ---------------------- */
 	public void onLocationChanged(Location location) {

@@ -4,7 +4,7 @@
 	android:layout_height="fill_parent"
 	android:background="@drawable/widget_frame_long"
 	>
-	<ImageView android:id="@+id/openFull"
+	<ImageView android:id="@+id/btn_openFull"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerVertical="true"

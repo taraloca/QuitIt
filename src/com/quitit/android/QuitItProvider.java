@@ -9,12 +9,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 public class QuitItProvider extends AppWidgetProvider {
 	private static final String DEB_TAG 				= "QuitItProvider.java";
+	
 	
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
@@ -28,6 +28,7 @@ public class QuitItProvider extends AppWidgetProvider {
             updateWidgetView(context, appWidgetManager, appWidgetId);
         }
 	}
+	
 	
 	@Override
     public void onDeleted(Context context, int[] appWidgetIds){
@@ -108,7 +109,7 @@ public class QuitItProvider extends AppWidgetProvider {
             int appWidgetId) {
     	Log.d(DEB_TAG, "Inside updateAppWidget");
     	String dayCount;
-        
+    	
     	String date = getStoredStartDate(context, appWidgetId);
     	Log.d(DEB_TAG, "Inside updateWidgetView via onUpdate and date is " + date);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -118,22 +119,21 @@ public class QuitItProvider extends AppWidgetProvider {
         }
         else{
         
-        dayCount = TimeDifference.getDaysDifference(date);
-        Log.d(DEB_TAG, "Value of dayCount is " + dayCount);
-        views.setTextViewText(R.id.days, dayCount);
-        
-        //Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
-       
-        
-        Intent openApp = new Intent(context, RunningTally.class);
-        openApp.putExtra("widgetId", appWidgetId);
-        Log.d(DEB_TAG, "$$$$$$$$$id is " + appWidgetId);
-        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, appWidgetId, openApp, PendingIntent.FLAG_CANCEL_CURRENT  );
-        views.setOnClickPendingIntent(R.id.openFull, pendingAppIntent);
-        
-        // Tell the widget manager
-        appWidgetManager.updateAppWidget(appWidgetId, views);       	
-        	
+	        dayCount = TimeDifference.getDaysDifference(date);
+	        Log.d(DEB_TAG, "Value of dayCount is " + dayCount);
+	        views.setTextViewText(R.id.days, dayCount);
+	        
+	        //Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.scottagarman.com"));  
+	       
+	        
+	        Intent openApp = new Intent(context, RunningTally.class);
+	        openApp.putExtra("widgetId", appWidgetId);
+	        Log.d(DEB_TAG, "$$$$$$$$$id is " + appWidgetId);
+	        PendingIntent pendingAppIntent = PendingIntent.getActivity(context, appWidgetId, openApp, PendingIntent.FLAG_CANCEL_CURRENT  );
+	        views.setOnClickPendingIntent(R.id.btn_openFull, pendingAppIntent);
+	        
+	        // Tell the widget manager
+	        appWidgetManager.updateAppWidget(appWidgetId, views);  
         }
     }
 }
