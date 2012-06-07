@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		>
+		
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:padding="10dip" >
+		
+			<TextView android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:text="@string/about"
+		       	android:textColor="#ffffff"
+		       	android:textSize="25dip"/>
+		       	
+		    <TextView android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:text="@string/about_information"
+		       	android:textSize="19dip"/>
+		    
+		    <TextView android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:text="@string/developer_tag"
+		       	android:textColor="#ffffff"
+		       	android:textSize="25dip"
+		       	android:layout_marginTop="19dip"/>
+		    
+		    <TextView android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:text="@string/developer_name"
+		       	android:textSize="19dip"/>
+		       	
+		       	
+		     <TextView android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:text="@string/contact"
+		       	android:textColor="#ffffff"
+		       	android:textSize="25dip"
+		       	android:layout_marginTop="19dip"/>
+		    
+		    <TextView android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:text="@string/contact_info"
+		       	android:textSize="19dip"/>
+
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="Version"
+				android:textColor="#ffffff"
+				android:textSize="25dip"
+				android:layout_marginTop="19dip" />
+
+			<TextView android:id="@+id/about_version_name"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="--"
+				android:textSize="19dip"/>
+	    </LinearLayout>
+
+		
+		
+</ScrollView>

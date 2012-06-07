@@ -28,7 +28,7 @@ public class AppWidgetConfigure extends Activity {
 	GregorianCalendar mDate;
 	StringBuilder mSb;
 	
-    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+	private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     
     public AppWidgetConfigure() {
         super();
@@ -38,31 +38,42 @@ public class AppWidgetConfigure extends Activity {
     public void onCreate(Bundle savedInstanceState){
     	super.onCreate(savedInstanceState);
     	Log.d(DEB_TAG, "inside onCreate");
-    	startService(new Intent(AppWidgetConfigure.this,
-                NotifyingService.class));
+//    	startService(new Intent(AppWidgetConfigure.this,
+//                NotifyingService.class));
     	// get the appWidgetId of the appWidget being configured
     	Intent launchIntent = getIntent();
     	Bundle extras 		= launchIntent.getExtras();
     	Log.d(DEB_TAG, "get extras oncreate " + extras);
-    	mAppWidgetId = extras.getInt("widgetId");
+    	//mAppWidgetId = extras.getInt("widgetId");
     	Log.d(DEB_TAG, "Inside onCreate mAppWidgetId is " + mAppWidgetId);
     	if(extras != null){
 	    	if(extras.getInt("widgetId") != 0){
-	    		mAppWidgetId = extras.getInt("widgetId");
+	    		//mAppWidgetId = extras.getInt("widgetId");
+	    		mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+
 	        	Log.d(DEB_TAG, "Inside onCreate mAppWidgetId is " + mAppWidgetId);
+	        	/*
+	        	 * Set the result to CANCELED.  This will cause the widget host to cancel
+	        	 * out of the widget placement if they press the back button.
+	        	 */
+	        	 Intent cancelResultValue = new Intent();
+	        	 cancelResultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+	        	 setResult(RESULT_CANCELED, cancelResultValue);
 	    	}else{
 	    		mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
 	                    AppWidgetManager.INVALID_APPWIDGET_ID);
 	    		Log.d(DEB_TAG, "Inside onCreate mAppWidgetId is " + mAppWidgetId);
 	    	}
+    	}else {
+    		// only launch if it's for configuration
+            // Note: when you launch for debugging, this does prevent this
+            // activity from running. We could also turn off the intent
+            // filtering for main activity.
+            // But, to debug this activity, we can also just comment the
+            // following line out.
+    		finish();
     	}
-    	/*
-    	 * Set the result to CANCELED.  This will cause the widget host to cancel
-    	 * out of the widget placement if they press the back button.
-    	 */
-    	 Intent cancelResultValue = new Intent();
-    	 cancelResultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-    	 setResult(RESULT_CANCELED, cancelResultValue);
+    	
     	 
     	 //Set view
     	 setContentView(R.layout.quitit_configure);
@@ -73,7 +84,7 @@ public class AppWidgetConfigure extends Activity {
     	 Button ok = (Button)findViewById(R.id.okbutton);
     	 
     	 ok.setOnClickListener(new OnClickListener() {
-			@Override
+			//@Override
 			public void onClick(View v) {
 				final Context context = AppWidgetConfigure.this;
 				
@@ -117,7 +128,7 @@ public class AppWidgetConfigure extends Activity {
     	 Button cancel = (Button)findViewById(R.id.cancelbutton);
     	 cancel.setOnClickListener(new OnClickListener() {
 			
-			@Override
+			//@Override
 			public void onClick(View v) {
 				// finish sends the already configured cancel result and closes activity
 				finish();

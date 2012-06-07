@@ -14,8 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +31,6 @@ public class RunningTally extends Activity {
     private TextView tvMins;
     private TextView tvSecs;
     private TextView tvMilSecs;
-    private Button btnStartListner;
-    private Button btnStopListener;
     private int mAppId = 0;
     
     private Timer autoUpdate;
@@ -178,7 +174,7 @@ public class RunningTally extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu, menu);
+	    inflater.inflate(R.menu.main_menu, menu);
 	    return true;
 	}
 	
@@ -187,12 +183,12 @@ public class RunningTally extends Activity {
     	switch(item.getItemId()){
 
     	// About
-		case R.id.about:
+		case R.id.main_menu_about:
 			startActivity(new Intent(this, AboutActivity.class));
 			break;
 		
 		// Preferences
-		case R.id.edit:
+		case R.id.main_menu_edit:
 			Log.d("###########", "inside edit pref choice");
 			 // Find the widget id from the intent. 
 	        Intent configIntent = new Intent(this, AppWidgetConfigure.class);

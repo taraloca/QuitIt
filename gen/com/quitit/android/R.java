@@ -12,62 +12,38 @@ public final class R {
     }
     public static final class drawable {
         public static final int calendar=0x7f020000;
-        public static final int emo_winking=0x7f020001;
-        public static final int enter=0x7f020002;
-        public static final int icon=0x7f020003;
-        public static final int menu_about=0x7f020004;
-        public static final int menu_edit=0x7f020005;
-        public static final int quitit_icon=0x7f020006;
-        public static final int stat_happy=0x7f020007;
-        public static final int stat_neutral=0x7f020008;
-        public static final int stat_sad=0x7f020009;
-        public static final int stepin=0x7f02000a;
-        public static final int widget_frame_long=0x7f02000b;
+        public static final int enter=0x7f020001;
+        public static final int quitit_icon=0x7f020002;
+        public static final int stepin=0x7f020003;
+        public static final int widget_frame_long=0x7f020004;
     }
     public static final class id {
-        public static final int DatePicker=0x7f070003;
-        public static final int LinearLayout01=0x7f070004;
-        public static final int about=0x7f07001c;
-        public static final int about_menu_email=0x7f07001e;
+        public static final int DatePicker=0x7f070001;
+        public static final int LinearLayout01=0x7f070002;
+        public static final int about_menu_back=0x7f07000d;
+        public static final int about_menu_email=0x7f07000c;
         public static final int about_version_name=0x7f070000;
-        public static final int btnStartListener=0x7f07000c;
-        public static final int btnStopListener=0x7f07000d;
-        public static final int btn_openFull=0x7f07001b;
-        public static final int cancelbutton=0x7f070006;
-        public static final int cleanDate=0x7f070007;
-        public static final int clear=0x7f07001a;
-        public static final int days=0x7f070008;
-        public static final int defaultAll=0x7f070019;
-        public static final int defaultSound=0x7f070017;
-        public static final int defaultVibrate=0x7f070018;
-        public static final int edit=0x7f07001d;
-        public static final int happy=0x7f07000e;
-        public static final int happyMarquee=0x7f070011;
-        public static final int happyViews=0x7f070014;
-        public static final int hours=0x7f070009;
-        public static final int image=0x7f070001;
-        public static final int minutes=0x7f07000a;
-        public static final int neutral=0x7f07000f;
-        public static final int neutralMarquee=0x7f070012;
-        public static final int neutralViews=0x7f070015;
-        public static final int okbutton=0x7f070005;
-        public static final int sad=0x7f070010;
-        public static final int sadMarquee=0x7f070013;
-        public static final int sadViews=0x7f070016;
-        public static final int seconds=0x7f07000b;
-        public static final int text=0x7f070002;
+        public static final int btn_openFull=0x7f07000a;
+        public static final int cancelbutton=0x7f070004;
+        public static final int cleanDate=0x7f070005;
+        public static final int days=0x7f070006;
+        public static final int hours=0x7f070007;
+        public static final int main_menu_about=0x7f07000e;
+        public static final int main_menu_edit=0x7f07000f;
+        public static final int minutes=0x7f070008;
+        public static final int okbutton=0x7f070003;
+        public static final int seconds=0x7f070009;
+        public static final int text=0x7f07000b;
     }
     public static final class layout {
         public static final int about=0x7f030000;
-        public static final int notification_layout=0x7f030001;
-        public static final int quitit_configure=0x7f030002;
-        public static final int running_tally=0x7f030003;
-        public static final int status_bar_notifications=0x7f030004;
-        public static final int widget=0x7f030005;
+        public static final int quitit_configure=0x7f030001;
+        public static final int running_tally=0x7f030002;
+        public static final int widget=0x7f030003;
     }
     public static final class menu {
-        public static final int menu=0x7f060000;
-        public static final int menu_about_email=0x7f060001;
+        public static final int about_menu=0x7f060000;
+        public static final int main_menu=0x7f060001;
     }
     public static final class string {
         /**  A 
@@ -75,45 +51,49 @@ public final class R {
         public static final int about=0x7f050002;
         public static final int about_information=0x7f050003;
         public static final int app_name=0x7f050001;
+        /**  B 
+         */
+        public static final int back=0x7f050004;
         /**  C 
          */
-        public static final int contact=0x7f050004;
-        public static final int contact_info=0x7f050005;
-        public static final int custom_notification=0x7f050019;
-        public static final int custom_notification_button=0x7f05001a;
-        public static final int developer_name=0x7f050007;
+        public static final int contact=0x7f050005;
+        public static final int contact_info=0x7f050006;
+        public static final int custom_notification=0x7f05001b;
+        public static final int custom_notification_button=0x7f05001c;
+        public static final int developer_name=0x7f050008;
         /**  D 
          */
-        public static final int developer_tag=0x7f050006;
+        public static final int developer_tag=0x7f050007;
         /**  E 
          */
-        public static final int email_us=0x7f050008;
+        public static final int email_us=0x7f050009;
         public static final int hello=0x7f050000;
-        public static final int long_notification=0x7f050013;
-        public static final int short_bottom_notification=0x7f050015;
-        public static final int short_center_notification=0x7f050016;
-        public static final int short_left_notification=0x7f050017;
-        public static final int short_notification=0x7f050012;
-        public static final int short_right_notification=0x7f050018;
-        public static final int short_top_notification=0x7f050014;
-        public static final int status_bar_notifications_clear=0x7f05000d;
+        public static final int long_notification=0x7f050015;
         /**  S 
          */
-        public static final int status_bar_notifications_default=0x7f050009;
-        public static final int status_bar_notifications_default_all=0x7f050011;
-        public static final int status_bar_notifications_default_sound=0x7f05000f;
-        public static final int status_bar_notifications_default_vibrate=0x7f050010;
-        public static final int status_bar_notifications_defaults=0x7f05001e;
-        public static final int status_bar_notifications_happy=0x7f05001f;
-        public static final int status_bar_notifications_happy_message=0x7f05000a;
-        public static final int status_bar_notifications_icons_and_marquee=0x7f05001c;
-        public static final int status_bar_notifications_icons_only=0x7f05001b;
-        public static final int status_bar_notifications_mood_title=0x7f05000e;
-        public static final int status_bar_notifications_ok=0x7f050020;
-        public static final int status_bar_notifications_ok_message=0x7f05000b;
-        public static final int status_bar_notifications_remote_views=0x7f05001d;
-        public static final int status_bar_notifications_sad=0x7f050021;
-        public static final int status_bar_notifications_sad_message=0x7f05000c;
+        public static final int settings=0x7f05000a;
+        public static final int short_bottom_notification=0x7f050017;
+        public static final int short_center_notification=0x7f050018;
+        public static final int short_left_notification=0x7f050019;
+        public static final int short_notification=0x7f050014;
+        public static final int short_right_notification=0x7f05001a;
+        public static final int short_top_notification=0x7f050016;
+        public static final int status_bar_notifications_clear=0x7f05000f;
+        public static final int status_bar_notifications_default=0x7f05000b;
+        public static final int status_bar_notifications_default_all=0x7f050013;
+        public static final int status_bar_notifications_default_sound=0x7f050011;
+        public static final int status_bar_notifications_default_vibrate=0x7f050012;
+        public static final int status_bar_notifications_defaults=0x7f050020;
+        public static final int status_bar_notifications_happy=0x7f050021;
+        public static final int status_bar_notifications_happy_message=0x7f05000c;
+        public static final int status_bar_notifications_icons_and_marquee=0x7f05001e;
+        public static final int status_bar_notifications_icons_only=0x7f05001d;
+        public static final int status_bar_notifications_mood_title=0x7f050010;
+        public static final int status_bar_notifications_ok=0x7f050022;
+        public static final int status_bar_notifications_ok_message=0x7f05000d;
+        public static final int status_bar_notifications_remote_views=0x7f05001f;
+        public static final int status_bar_notifications_sad=0x7f050023;
+        public static final int status_bar_notifications_sad_message=0x7f05000e;
     }
     public static final class xml {
         public static final int quitit_provider=0x7f040000;

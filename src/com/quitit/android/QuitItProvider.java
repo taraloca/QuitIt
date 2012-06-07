@@ -17,16 +17,31 @@ public class QuitItProvider extends AppWidgetProvider {
 	
 	
 	@Override
+    public void onEnabled(Context context) {
+        // This is only called once, regardless of the number of widgets of this
+        // type
+        // We do not have any global initialization
+        Log.i(DEB_TAG, "onEnabled()");
+        super.onEnabled(context);
+    }
+
+	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		Log.d(DEB_TAG, "Inside onUpdate provider");
 		
-		final int N = appWidgetIds.length;
-        for (int i=0; i<N; i++) {
-            int appWidgetId = appWidgetIds[i];
-            Log.d(DEB_TAG, "appWidgetId " + appWidgetId);
+//		final int N = appWidgetIds.length;
+//        for (int i=0; i<N; i++) {
+//            int appWidgetId = appWidgetIds[i];
+//            Log.d(DEB_TAG, "appWidgetId " + appWidgetId);
+//            updateWidgetView(context, appWidgetManager, appWidgetId);
+//        }
+		for (int appWidgetId : appWidgetIds) {
+
             updateWidgetView(context, appWidgetManager, appWidgetId);
+
         }
+
 	}
 	
 	
@@ -48,22 +63,17 @@ public class QuitItProvider extends AppWidgetProvider {
 		super.onDeleted(context, appWidgetIds);
     }
 	
-	@Override
-	public void onDisabled(Context context){
-		
-        Log.d(DEB_TAG, "onDisabled");
-        PackageManager pm = context.getPackageManager();
-        pm.setComponentEnabledSetting(
-            new ComponentName(QUITIT.PKG_QUITIT, ".appwidget.ExampleBroadcastReceiver"),
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP);
-        super.onDisabled(context);
-	}
-	
-	@Override
-	public void onEnabled(Context context){
-		super.onEnabled(context);
-	}
+//	@Override
+//	public void onDisabled(Context context){
+//		
+//        Log.d(DEB_TAG, "onDisabled");
+//        PackageManager pm = context.getPackageManager();
+//        pm.setComponentEnabledSetting(
+//            new ComponentName(QUITIT.PKG_QUITIT, ".appwidget.ExampleBroadcastReceiver"),
+//            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+//            PackageManager.DONT_KILL_APP);
+//        super.onDisabled(context);
+//	}
 	
 	@Override
 	public void onReceive(Context context, Intent intent){
